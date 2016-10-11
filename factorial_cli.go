@@ -4,11 +4,12 @@ import(
         "flag"
 )
 
-var number = flag.Int("number", 9, "The number for finding the factorial")
+var num = flag.Int("number", 9, "The number for finding the factorial")
 
 func main() {
+	flag.Parse()
         fmt.Println("====Factorial Program Begins====")
-        i := number
+        i := *num
         fmt.Printf("Factorial for %d is : %d \n", i, Factorial(uint64(i)))
 }
 func Factorial(n uint64)(result uint64) {
