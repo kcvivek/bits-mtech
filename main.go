@@ -38,14 +38,16 @@ func FactorialCall(w http.ResponseWriter, r *http.Request) {
     }
 
     var f uint64
+    f = 0
     if (i > 20) {
-      f = 0
-      fmt.Frintf(w, "Input error, can not calculate factorial for number greather than 20")
+      fmt.Fprintln(w, "Input error, can not calculate factorial for number greather than 20")
+    } else if (i < 0) {
+      fmt.Fprintln(w, "Input error, can not calculate factorial for negative numbers")
     } else {
         f = Factorial(uint64(i))
+        fmt.Fprintf(w, "Factorial for number %d is: %d \nBye, see you in next run..\n", i, f)
     }
-    
-    fmt.Fprintf(w, "Factorial for number %d is: %d \nBye, see you in next run..\n", i, f)
+        
 }
 
 func Factorial(n uint64)(result uint64) {
