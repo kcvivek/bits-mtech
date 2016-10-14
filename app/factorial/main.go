@@ -13,6 +13,7 @@ import (
 	"github.com/kcvivek/bits-mtech/app/handlers"
 	"github.com/kcvivek/bits-mtech/app/health"
 	"github.com/kcvivek/bits-mtech/app/user"
+	"github.com/gorilla/mux"
 )
 
 
@@ -46,14 +47,16 @@ func main() {
 	}()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", handlers.HelloHandler)
+	//mux.HandleFunc("/", handlers.HelloHandler)
+	mux.HandleFunc("/", handlers.FactorialHandler)
 	mux.Handle("/login", handlers.LoginHandler(*secret, user.DB))
 	mux.Handle("/secure", handlers.JWTAuthHandler(handlers.HelloHandler))
 	mux.Handle("/version", handlers.VersionHandler(version))
-  mux.HandleFunc("/fact/{factId}", handlers.FactorialHandler)
-  mux.HandleFunc("/factorial/{factId}", handlers.FactorialHandler)
+        mux.HandleFunc("/fact/{factId}", handlers.FactorialHandler)
+        mux.HandleFunc("/factorial/{factId}", handlers.FactorialHandler)
+        mux.HandleFunc("/kc/{factId}", handlers.FactorialCall)
 
-	httpServer := manners.NewServer()
+	httpServer := manners.NewServer().StrictSlash(true)
 	httpServer.Addr = *httpAddr
 	httpServer.Handler = handlers.LoggingHandler(mux)
 
